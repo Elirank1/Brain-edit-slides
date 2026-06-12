@@ -1,3 +1,47 @@
+# Brain Edit Slides — fork with `page-edit-mode` sibling skill
+
+![page-edit-mode in action](./page-edit-mode/assets/hero.png)
+
+## `page-edit-mode` — visual editor for single-page HTML
+
+A Canva-style in-browser editor for **HTML proposals, landing pages, and editorial documents** — built by [Eliran Keren](https://github.com/Elirank1) for [3pel·AI](https://www.linkedin.com/in/elirankeren) sales-proposal workflows.
+
+Use it when your HTML is one long scrolling page with `<section>` elements (flow layout) — not a slide deck. Edit text inline, recolor with brand swatches, paste screenshots, undo/redo, autosave to localStorage, save the edited file with Cmd+S. No server, no build, no dependencies.
+
+**Install:**
+
+```bash
+python3 page-edit-mode/scripts/inject_editor.py path/to/proposal.html
+```
+
+**Full docs:** [`page-edit-mode/SKILL.md`](./page-edit-mode/SKILL.md)
+
+### Why a sibling skill (not a patch)
+
+The original `deck-edit-mode` (root of this repo) assumes `.slide` containers with absolute positioning — perfect for slide decks, breaks flow layout. So `page-edit-mode`:
+
+- **Keeps:** inline text edit, color swatches (whole element OR selected word), image paste (Cmd+V), Cmd+C/V/D for cloning, undo/redo, autosave, Cmd+S export, counter baking, URL absolutization
+- **Drops:** drag-to-move, snap-guides, arrow-nudge, blur/shape elements, z-order — none apply in flow layout
+- **Replaces:** save model keyed by `<section id>` instead of slide index; canvas root configurable via `window.__brainEdConfig.rootSelector`; default palette is ink (`#1A2238`) + terra (`#C8503D`) tuned for `3pel·AI` proposals
+
+The injector strips any previously-installed `deck-edit-mode` block before injecting, so a single HTML file can switch between the two without `#ed-fab` collisions.
+
+### Quick decision: which skill for which file?
+
+| Use `page-edit-mode` when | Use `deck-edit-mode` when |
+|---|---|
+| Single scrolling page with `<section>` elements | `<div id="deck">` with `.slide` children |
+| Flow layout (grid, flex, normal block flow) | Absolute positioning inside a scaled stage |
+| Proposals, landing pages, articles | Pitch decks, presentations, slide-based stories |
+
+---
+
+## Original `deck-edit-mode` (below)
+
+The original deck-edit-mode skill (root files: `SKILL.md`, `scripts/`) is unchanged in this fork — all credit to its author. Use it for actual slide decks.
+
+---
+
 # Deck Edit Mode ✏️
 
 **מצב עריכה ויזואלי (בסגנון Canva) לכל מצגת HTML שנבנתה עם Claude Code.**
